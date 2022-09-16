@@ -1,0 +1,58 @@
+/**
+ * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+ *
+ *
+ * @param array int整型一维数组
+ * @param arrayLen int array数组长度
+ * @return int整型一维数组
+ * @return int* returnSize 返回数组行数
+ */
+int* reOrderArrayTwo(int* array, int arrayLen, int* returnSize ) 
+{
+    //双指针 无序
+    int left = 0;
+    int right = arrayLen - 1;
+    *returnSize = arrayLen;
+    while(left < right)
+    {
+        if(array[left]%2 != 0)
+        {
+            left++;
+            continue;
+        } 
+        if(array[right]%2 != 1)
+        {
+            right--;
+            continue;
+        }
+        int tmp = array[left];
+        array[left] = array[right];
+        array[right] = tmp;
+        left++;
+        right--;
+    }
+    return array;
+    //双指针 有序
+    // int* num = (int*)malloc(sizeof(int) * arrayLen);
+    // int left = 0;
+    // int right = arrayLen - 1;
+    // int left_arr = 0;
+    // int right_arr = arrayLen - 1;
+    // *returnSize = arrayLen;
+    // while (left < arrayLen) 
+    // {
+    //     if (array[left] % 2 == 1) 
+    //     {
+    //         num[left_arr++] = array[left];
+    //     }
+    //     if (array[right] % 2 == 0) 
+    //     {
+    //         num[right_arr--] = array[right];
+    //     }
+    //     left++;
+    //     right--;
+    // }
+
+    // return  num;
+    // write code here
+}
