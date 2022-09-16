@@ -1,0 +1,36 @@
+/**
+ * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+ *
+ * 
+ * @param str string字符串 
+ * @return string字符串
+ */
+char* ReverseSentence(char* str ) 
+{
+    int len= strlen(str);
+    int start=len -1;
+    int end= len -1;
+    char* arr= (char*)malloc(sizeof(char)*len);
+    int top =0;
+    while(start >=0)
+    {
+        while(start>=0 && str[start] !=' ')
+        {
+            start--;
+        }
+        for(int i= start+1;i <= end;i++)
+        {
+            arr[top++] = str[i];
+        }
+        start--;
+        end = start;
+        if(start < -1)
+        {
+            arr[top++] = '\0';
+        }
+        else
+            arr[top++] = ' ';
+    }
+    return arr;
+    // write code here
+}
