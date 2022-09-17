@@ -1,0 +1,30 @@
+/**
+ * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+ *
+ * 
+ * @param str string字符串 
+ * @param n int整型 
+ * @return string字符串
+ */
+char* LeftRotateString(char* str, int n ) 
+{
+    int len = strlen(str);
+    if(len == 0)
+        return  "";
+    n = n  % len;
+    char* ret = (char*)malloc(sizeof(char)*len);
+    int left = n;
+    int right = n;
+    int j = 0;
+    for(int i = n;i < len ;i++)
+    {
+        ret[j++] = str[i];
+    }
+    for(int i = 0;i < n;i++)
+    {
+        ret[j++] = str[i];
+    }
+    return ret;
+
+    // write code here
+}
