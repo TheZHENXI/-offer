@@ -1,0 +1,56 @@
+/**
+ * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+ *
+ * 
+ * @param s string字符串 
+ * @return int整型
+ */
+int lengthOfLongestSubstring(char* s ) 
+{
+    int len = strlen(s); 
+    int cnt = 0;
+    int MAX = 0;
+    int left = 0;//left right 控制窗口的大小
+    int right = 0;//hash 负责查重
+    // while(left < len)
+    // {
+    //     if(s[left] != s[right])
+    //     {
+    //         right++;
+    //         cnt = right - left;
+    //         if(cnt > MAX)
+    //         {
+    //             MAX = cnt;
+    //         }
+    //     }
+    //     else
+    //     {
+    //         left++;
+    //         right = left+1;
+    //     }
+    // }
+    int hash[128] = {0} ;
+    while(right < len) 
+    {
+        hash[s[right]]++;
+        if(hash[s[right]] == 1)
+        {
+            cnt = right - left + 1;
+            if(cnt > MAX)
+                MAX = cnt;
+        }
+        else
+        {//出现重复字符时，让left右移并将窗口之外的元素在hash中的频率-1，直到窗口内不在有重复字符
+            while(hash[s[left]] ==1)
+            {
+                hash[s[left]]--;
+                left++;
+            }
+            hash[s[left]]--;
+            left++;
+        }
+        right++;
+    }
+    return MAX;
+    // write code here
+}
