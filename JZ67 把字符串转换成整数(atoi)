@@ -1,0 +1,126 @@
+/**
+ * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+ *
+ * 
+ * @param s string字符串 
+ * @return int整型
+ */
+int StrToInt(char* s ) 
+{
+    int flag = 1;
+    int len = strlen(s);
+    long int ret = 0;
+    int index = 0;
+    //除去前置空格
+    while(index < len)
+    {
+        if(s[index] == ' ')
+            index++;
+        else
+            break;
+    }
+    if(index == len)
+        return 0;
+    //处理正负号
+    if(s[index] == '-')
+    {
+        flag = -1;
+        index++;
+    }
+    else if(s[index] == '+')
+    {
+        index++;
+    }
+    //处理数字-0-9
+    while(index < len)
+    {
+        if(s[index] < '0' || s[index] > '9')
+            break;
+        ret = ret*10 + (s[index] - '0');
+        //越界限制
+        if(ret >= 2147483647 && flag == 1)
+        {
+                ret = 2147483647;
+                break;
+        }
+        else if(ret >= 2147483648 && flag == -1)
+        {
+            ret = 2147483648;
+            break;
+        }
+        
+        index++;
+    }
+
+    return flag*ret;
+
+
+
+
+
+
+
+    // int flag = 1;
+    // int suo = 0;
+    // int len = strlen(s);
+    // long int ret = 0;
+    // int num[11];
+    // for(int i =0 ;i < 11;i++)
+    // {
+    //     num[i] = -1;
+    // }
+    // int j = 10;
+    // for(int i =0;i < len;i++)
+    // {
+    //     //跳过空格
+    //     if(s[i] == ' ' && j == 10 && suo == 0)//j == 10 防止中间出现 如 0-2;suo
+    //         continue;
+    //     //处理遇到的+-
+    //     if(s[i] == '-' && j == 10 && suo == 0)
+    //     {
+    //         flag = -1;
+    //         suo = 1;
+    //         continue;
+    //     }
+    //     else if(s[i] == '+' && j == 10 && suo == 0)
+    //     {
+    //         suo = 1;
+    //         continue;
+    //     }
+    //     //提出前面的有效数字
+    //     if(s[i] >= '0' && s[i] <='9')
+    //     {
+    //         suo = 1;
+    //         num[j] = s[i] - '0';
+    //         if(num[10] == 0)
+    //             j=j;
+    //         else
+    //             j--;
+    //     }
+    //     else
+    //        break;
+    // }
+    // //对存储的数字进行转换
+    // int cnt = 0;
+    // int sum = 0;
+    // double tmp = 0;
+    // for(int i = 0;i < 11;i++)
+    // {
+    //     if(num[i] != -1)
+    //     { 
+                 
+    //         tmp = (num[i] * pow(10, cnt++));
+    //         ret += tmp;
+    //     }
+    // }
+    // if(ret >= 2147483648)
+    // {
+    //     if(flag == 1)
+    //         ret = 2147483647;
+    //     else
+    //         ret = 2147483648;
+    // }
+    
+    // return flag*ret;
+    // write code here
+}
