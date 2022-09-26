@@ -1,0 +1,47 @@
+/**
+ * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+ *
+ * 
+ * @param array int整型一维数组 
+ * @param arrayLen int array数组长度
+ * @return int整型一维数组
+ * @return int* returnSize 返回数组行数
+ */
+int max(int a,int b)
+{
+    if(a > b)
+        return a;
+    else
+        return b;
+}
+
+int* FindGreatestSumOfSubArray(int* array, int arrayLen, int* returnSize )
+{
+    int* dp = (int*)calloc(arrayLen,sizeof(int));//存储前n项和的最大值
+    int left = 0;
+    int right =0;
+    int left_max = 0;
+    int right_max = 0;
+    int maxsum = -100;
+    dp[0] = array[0];
+    for(int i = 1;i < arrayLen;i++)
+    {
+        right++;
+        dp[i] = max(dp[i-1]+array[i],array[i]);//计算前i项和的最大值
+        if(dp[i-1] < 0)
+        {
+            left = right;
+        }
+        if(dp[i] > maxsum || 
+        (dp[i] == maxsum && right-left+1 >right_max-left_max+1))
+        {
+            maxsum = dp[i];
+            left_max = left;
+            right_max = right;
+        }
+    }
+    *returnSize = right_max - left_max + 1;
+    return array+left_max;
+
+    // write code here
+}
