@@ -26,27 +26,27 @@
  * };
  */
 
-//思路一：三指针
-// struct ListNode* reverseList(struct ListNode* head){
-//     if(head == NULL)
-//         return NULL;
-//     struct ListNode* n1 = NULL;
-//     struct ListNode* n2 = head;
-//     struct ListNode* n3 = n2->next;
-//     while(n2)
-//     {
-//         //翻转
-//         n2->next = n1;
-//         //迭代往后走
-//         n1 = n2;
-//         n2 = n3;
-//         if(n3)
-//             n3= n3->next; 
-//     }
-//     return n1;
+思路一：三指针
+struct ListNode* reverseList(struct ListNode* head){
+    if(head == NULL)
+        return NULL;
+    struct ListNode* n1 = NULL;
+    struct ListNode* n2 = head;
+    struct ListNode* n3 = n2->next;
+    while(n2)
+    {
+        //翻转
+        n2->next = n1;
+        //迭代往后走
+        n1 = n2;
+        n2 = n3;
+        if(n3)
+            n3= n3->next; 
+    }
+    return n1;
 
-// }
-//思路二：头插法
+}
+思路二：头插法
 struct ListNode* reverseList(struct ListNode* head)
 {
     struct ListNode* newhead = NULL;
