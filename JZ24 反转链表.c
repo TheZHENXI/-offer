@@ -66,10 +66,6 @@ struct ListNode* reverseList(struct ListNode* head)
 //思路三: 和二一样
 struct ListNode* ReverseList(struct ListNode* pHead ) 
 {
-    if(pHead == NULL)
-    {
-        return NULL;
-    }
     struct ListNode* tmp = NULL;
     struct ListNode* cur = pHead;
     struct ListNode* curPre = NULL;
