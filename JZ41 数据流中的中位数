@@ -1,0 +1,204 @@
+/**
+ * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+ *
+ * 
+ * @param num int整型 
+ * @return 无
+ */
+typedef int HPDataType;
+typedef struct Heap
+{
+	HPDataType* data;
+	int capacity;
+	int size;
+}Heap;
+//交换
+void swap(int* a,int* b)
+{
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+//小堆的向下调整算法
+void adjustdown1(HPDataType* a,int n,int root)//左右都为小堆
+{
+	int parent = root,child = 2*parent + 1;
+	while(child < n)
+	{
+		if(child+1 < n && a[child+1] < a[child])
+		{
+			child++;
+		}
+		if(a[child] < a[parent])
+		{
+			swap(&a[child],&a[parent]);
+		}
+		else
+		{
+			break;
+		}
+		parent = child;
+		child  = 2*parent + 1;
+	}
+}
+//大堆的向下调整算法
+void adjustdown2(HPDataType* a,int n,int root)//左右都为小堆
+{
+	int parent = root,child = 2*parent + 1;
+	while(child < n)
+	{
+		if(child+1 < n && a[child+1] > a[child])
+		{
+			child++;
+		}
+		if(a[child] > a[parent])
+		{
+			swap(&a[child],&a[parent]);
+		}
+		else
+		{
+			break;
+		}
+		parent = child;
+		child  = 2*parent + 1;
+	}
+}
+//建小堆
+void BuildMinHeap(HPDataType*a,int n)
+{
+	for(int i = (n-1-1)/2;i >=0;i--)
+	{
+		adjustdown1(a,n,i);
+	}
+}
+void HeapInit(Heap*php)
+{
+	php->data = (HPDataType*)malloc(sizeof(HPDataType)*1000);
+	// memcpy(php->data,a,sizeof(HPDataType)*n);
+	php->capacity = 1000;
+	php->size = 0;
+}
+void AdjustUp1(HPDataType* a,int n,int pos)
+{
+	int child = pos,parent = (child-1)/2;
+	while(child > 0)
+	{
+		if(a[child] < a[parent])
+		{
+			swap(&a[child],&a[parent]);
+		}
+		else
+		{
+			break;
+		}
+		child = parent;
+		parent = (child-1)/2;
+	}
+}
+void AdjustUp2(HPDataType* a,int n,int pos)
+{
+	int child = pos,parent = (child-1)/2;
+	while(child > 0)
+	{
+		if(a[child] > a[parent])
+		{
+			swap(&a[child],&a[parent]);
+		}
+		else
+		{
+			break;
+		}
+		child = parent;
+		parent = (child-1)/2;
+	}
+}
+void HeapPush1(Heap*php,HPDataType x)//Push到数组尾端进去后，需要调整，保持堆的性质
+{
+	// assert(php);
+	if(php->capacity == php->size)
+	{
+		php->data = (HPDataType*)realloc(php->data,sizeof(HPDataType)*2*php->capacity);
+	}
+	php->data[php->size++] = x;
+	//放进去后向上调整，保持堆的性质
+	AdjustUp1(php->data,php->size,php->size - 1);
+}
+void HeapPush2(Heap*php,HPDataType x)//Push到数组尾端进去后，需要调整，保持堆的性质
+{
+	// assert(php);
+	if(php->capacity == php->size)
+	{
+		php->data = (HPDataType*)realloc(php->data,sizeof(HPDataType)*2*php->capacity);
+	}
+	php->data[php->size++] = x;
+	//放进去后向上调整，保持堆的性质
+	AdjustUp2(php->data,php->size,php->size - 1);
+}
+
+void HeapPop1(Heap*php)//从数组头上Pop
+{
+	// assert(php);
+	// assert(php->size > 0);
+	
+	swap(&php->data[0],&php->data[php->size -1]);
+	php->size--;
+	adjustdown1(php->data,php->size,0);
+}
+void HeapPop2(Heap*php)//从数组头上Pop
+{
+	// assert(php);
+	// assert(php->size > 0);
+	
+	swap(&php->data[0],&php->data[php->size -1]);
+	php->size--;
+	adjustdown2(php->data,php->size,0);
+}
+HPDataType HeapTop(Heap*php)
+{
+	return php->data[0];
+}
+/*****************************************************************************/
+
+  
+Heap Min_hp;
+Heap Max_hp;
+
+int flag = 1;
+void Insert(int num ) 
+{
+    //[Max_hp],[Min_hp]
+    if(flag == 1)
+    {
+        HeapInit(&Min_hp);
+        HeapInit(&Max_hp);
+        flag = 0;
+    }
+    //平衡左右两个堆 【大堆】【小堆】
+    HeapPush2(&Max_hp, num);
+    HeapPush1(&Min_hp,HeapTop(&Max_hp));
+    HeapPop2(&Max_hp);
+
+    if(Max_hp.size < Min_hp.size)
+    {
+        HeapPush2(&Max_hp,HeapTop(&Min_hp));
+        HeapPop1(&Min_hp);
+    }
+
+}
+/**
+ * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+ *
+ * 
+ * @param 无 
+ * @return double浮点型
+ */
+double GetMedian() 
+{
+    //哪个堆的size大就返回哪个（奇数），当size相等时，返回两堆顶和/2.00
+    if(Max_hp.size > Min_hp.size)
+        return HeapTop(&Max_hp);
+    else if(Max_hp.size < Min_hp.size)
+        return HeapTop(&Min_hp);
+    else
+        return (Max_hp.data[0]+Min_hp.data[0])/2.00;
+}
