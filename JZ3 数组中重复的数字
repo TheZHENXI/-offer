@@ -1,0 +1,24 @@
+void swap(int* x,int* y)
+{
+    int tmp = *x;
+    *x = *y;
+    *y = tmp;
+}
+ //最优解方法：下标法;
+ //时间复杂度：O(n)，空间复杂度：O(1)
+int duplicate(int* numbers, int numbersLen ) 
+{
+    for(int i = 0;i < numbersLen;i++)
+    {
+        while(i != numbers[i])
+        {
+            if(numbers[i] == numbers[numbers[i]])
+            {
+                return numbers[i];
+            }
+            swap(&numbers[i],&numbers[numbers[i]]);
+        }
+    }
+    return -1;
+    // write code here
+}
