@@ -1,0 +1,30 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+//判断以root1为跟的树 中 是否包含 root2
+//       4               4
+//      /  \            /
+//     1    2          1
+//与IsSameTree不同，从根开始，
+bool recur(struct TreeNode* root1, struct TreeNode* root2 )
+{
+    if(root2 == NULL) return true; //root2已经配完成
+    if(root1 == NULL || root1->val != root2->val)//没匹配完成 或者 值不相等
+        return false;
+    
+    return recur(root1->left, root2->left) && recur(root1->right, root2->right);
+}
+bool isSubStructure(struct TreeNode* pRoot1, struct TreeNode* pRoot2 ) 
+{
+    if(pRoot1 == NULL ||pRoot2 == NULL) return false;
+
+    if(recur(pRoot1, pRoot2))
+        return true;
+
+    return isSubStructure(pRoot1->left,pRoot2) || isSubStructure(pRoot1->right,pRoot2);
+}
