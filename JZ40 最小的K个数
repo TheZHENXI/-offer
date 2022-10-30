@@ -1,0 +1,59 @@
+/**
+ * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+ *
+ * 
+ * @param input int整型一维数组 
+ * @param inputLen int input数组长度
+ * @param k int整型 
+ * @return int整型一维数组
+ * @return int* returnSize 返回数组行数
+ */
+void swap(int* x,int* y)
+{
+    int tmp = *x;
+    *x = *y;
+    *y = tmp;
+}
+//向下调整算法（大堆）
+void Adjustdown(int* a,int n,int root)
+{
+    int parent = root;
+    int child = root*2 + 1;
+    while(child < n)
+    {
+        if(child+1 < n && a[child+1] > a[child])
+        {
+            child++;
+        }
+        if(a[parent] < a[child])
+        {
+            swap(&a[parent],&a[child]);
+        }
+        else
+        {
+            break;
+        }
+        parent = child;
+        child = 2*parent + 1;
+    }
+}
+//TopK的最小值，建立大堆
+//时间复杂度：O(n*logk),空间复杂度O(1)
+int* GetLeastNumbers_Solution(int* input, int inputLen, int k, int* returnSize ) 
+{
+    for(int i = (k-2)/2;i >= 0 ;i--)
+    {
+        Adjustdown(input, k, i);
+    }
+    for(int i = k;i < inputLen;i++)
+    {
+        if(input[i] < input[0])
+        {
+            swap(&input[i], &input[0]);
+            Adjustdown(input, k, 0);//时间O(logk)
+        }
+    }
+
+    *returnSize = k;
+    return input;
+}
