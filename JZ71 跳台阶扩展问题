@@ -1,0 +1,28 @@
+/**
+ * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+ *
+ * 
+ * @param number int整型 
+ * @return int整型
+ */
+int jumpFloorII(int n) 
+{
+    //核心思想：到n个台阶的路径可以从第n-1跳来，n-2跳来...2跳来，1跳来，0跳来
+    //f(n) = f(n-1) + f(n-2) + ... f(2) + f(1),
+    //由于f(n-1) = f(n-2) + ... f(2) + f(1),则f(n) = 2*f(n-1)
+    
+    //非递归：时间复杂度:O(1),空间复杂度：O(1)
+    // int f1 = 1,f2 = 2,f3;
+    // if(n == 1) return f1;
+    // if(n == 2) return f2;
+    // if(n > 2)
+    // {
+    //     f3 = pow(2,n-1);
+    // }
+    // return f3;
+    //递归：时间复杂度:O(n),空间复杂度：O(n)
+    if(n == 1) return 1;
+    if(n == 2) return 2;
+
+    return 2*jumpFloorII(n-1);
+}
