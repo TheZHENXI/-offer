@@ -1,0 +1,31 @@
+/**
+ * struct TreeNode {
+ *	int val;
+ *	struct TreeNode *left;
+ *	struct TreeNode *right;
+ * };
+ */
+/**
+ * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+ *
+ * 
+ * @param pRoot TreeNode类 
+ * @return bool布尔型
+ */
+bool _isSymmetrical(struct TreeNode* root1,struct TreeNode* root2)
+{
+    if(root1 == NULL && root2 == NULL)  return true;
+    if(root1 != NULL && root2 == NULL)  return false;
+    if(root1 == NULL && root2 != NULL)  return false;
+
+    if(root1->val != root2->val)   return false;
+
+    return _isSymmetrical(root1->left, root2->right) 
+            && _isSymmetrical(root1->right, root2->left);
+}
+bool isSymmetrical(struct TreeNode* root ) 
+{
+    if(root == NULL) return true;
+
+    return _isSymmetrical(root->left, root->right);
+}
