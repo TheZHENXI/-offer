@@ -1,0 +1,100 @@
+/**
+ * struct TreeNode {
+ *	int val;
+ *	struct TreeNode *left;
+ *	struct TreeNode *right;
+ * };
+ */
+/**
+ * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+ *
+ * 
+ * @param root TreeNode类 
+ * @return int整型一维数组
+ * @return int* returnSize 返回数组行数
+ */
+typedef struct QueueNode
+{
+    struct QueueNode* next;
+    struct TreeNode* data;//队列存储的数据类型调整为树节点指针类型
+}QueueNode;
+typedef struct Queue
+{
+    QueueNode* head;
+    QueueNode* tail;
+}Queue;
+void InitQueue(Queue* pq)
+{
+    pq->head = NULL;
+    pq->tail = NULL;
+}
+bool EmptyQueue(Queue* pq)
+{
+    return pq->head == NULL;
+}
+void QueuePush(Queue* pq, struct TreeNode* proot)
+{
+    QueueNode* newnode = ( QueueNode*)malloc(sizeof(QueueNode));
+    newnode->next = NULL;
+    newnode->data = proot;
+
+    if(pq->head == NULL && pq->tail == NULL) 
+    {
+        pq->head = newnode;
+        pq->tail = newnode;
+    }
+    else
+    {
+        pq->tail->next = newnode;
+        pq->tail = newnode;
+    }
+}
+void QueuePop(Queue* pq)
+{
+    if(EmptyQueue(pq)) return;
+
+    QueueNode* tmp = pq->head->next;
+    free(pq->head);
+    pq->head = tmp;
+
+    if(pq->head == NULL) pq->tail = NULL;//防止tail成为野指针
+}
+struct TreeNode* QueueFront(Queue* pq)
+{
+    if(pq == NULL) return NULL;
+
+    return pq->head->data;
+}
+
+//idea：利用队列，出一进二
+int* PrintFromTopToBottom(struct TreeNode* root, int* returnSize ) 
+{
+    if(root == NULL) 
+    {
+        *returnSize = 0;
+        return NULL;
+    }
+    
+    int* ret = (int*)malloc(sizeof(int)*1000);
+    int index = 0;
+    //建立队列，并将根节点入队列
+    Queue q;
+    printf("1 ");
+    InitQueue(&q);
+    QueuePush(&q,root);
+
+    while(!EmptyQueue(&q))
+    {
+        //需要用一个变量，记录一下队头
+        struct TreeNode* front = QueueFront(&q);
+        QueuePop(&q);
+
+        printf("%d ",front->val);
+        ret[index++] = front->val;
+        //出队头，进队头的左右节点，切勿写成root
+        if(front->left  != NULL)   QueuePush(&q,front->left);
+        if(front->right != NULL)   QueuePush(&q,front->right);
+    }
+    *returnSize = index;
+    return ret;
+}
