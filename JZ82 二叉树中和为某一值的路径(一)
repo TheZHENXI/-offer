@@ -1,0 +1,14 @@
+bool hasPathSum(struct TreeNode* root, int target) 
+{
+    //根节点为空，则为false
+    if(root == NULL) return false;
+
+    //减去当前层的val,更新target
+    target -= root->val;
+    //如果当前节点为叶子结点，而且target为0，则存在此路径
+    if(root->left == NULL && root->right == NULL && target == 0) return true;
+
+    //继续去在左右子树中去查找,有一个能找到就行
+    return hasPathSum(root->left, target) || hasPathSum(root->right, target);
+        
+}
