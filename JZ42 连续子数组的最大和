@@ -1,0 +1,44 @@
+
+/**
+ * 
+ * @param array int整型一维数组 
+ * @param arrayLen int array数组长度
+ * @return int整型
+ */
+int max(int X,int Y)
+{
+    if(X > Y) return X;
+    else      return Y;
+}
+int FindGreatestSumOfSubArray(int* array, int arrayLen ) 
+{
+    //思路一：自己做的，相当于简化的动态规划；O(n),O(1);
+    // int MaxSum = -101;
+    // int sum = 0;
+    // int right = 0;
+    // while(right < arrayLen)
+    // {
+    //
+    //     sum += array[right];//求和
+    //     if(sum > MaxSum)//更新最大值
+    //     {
+    //         MaxSum = sum;
+    //     }
+    //     if(sum <= 0)//如果sum小于等于0的话，将sum归零，然后继续求和
+    //     {            //因为小于等于0的话，在把他加上去的话，只会缩小sum
+    //         sum = 0;
+    //     }
+    //     right++;
+    // }
+    // return MaxSum;
+    // // write code here
+    int sum = 0;
+    int Maxsum = array[0];
+
+    for(int i = 0;i < arrayLen;i++)
+    {
+        sum = max(sum+array[i],array[i]);//确保sum不会缩小，若前面和<=0,就不能把它加上去
+        Maxsum = max(Maxsum,sum);
+    }
+    return Maxsum;
+}
