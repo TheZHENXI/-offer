@@ -1,0 +1,47 @@
+
+/**
+ * 
+ * @param array int整型一维数组 
+ * @param arrayLen int array数组长度
+ * @return int整型
+ */
+int max(int x,int y)
+{
+    if(x > y) return x;
+    else      return y;
+}
+int FindGreatestSumOfSubArray(int* array, int arrayLen ) 
+{
+    // //状态定义：以第i个元素结尾的最大连续和,将F(0),F(1)...F(i)存到ret
+    // int* ret = (int*)malloc(sizeof(int)*arrayLen);
+    // //初始化
+    // ret[0] = array[0];
+    
+    // for(int i = 1;i < arrayLen;i++)
+    // {
+    //     //状态转移方程
+    //     ret[i] = max(ret[i-1]+array[i],array[i]);
+    // }   
+    // //返回值 max(ret[i])
+    // int maxRet = ret[0];
+    // for(int i = 1;i < arrayLen;i++)
+    // {
+    //     if(ret[i] > maxSum)
+    //         maxRet = ret[i];
+    // }
+    // return maxRet;
+
+    //初始化
+    int curSum = array[0];
+    int maxSum = array[0];
+
+    for(int i = 1; i < arrayLen;i++)
+    {
+        //状态转移方程
+        curSum = max(curSum+array[i],array[i]);
+        //max(F(i))
+        maxSum = max(curSum,maxSum);
+    }
+    return maxSum;
+
+}
