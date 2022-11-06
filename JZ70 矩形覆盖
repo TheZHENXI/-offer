@@ -1,0 +1,29 @@
+/**
+ * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+ *
+ * 
+ * @param number int整型 
+ * @return int整型
+ */
+int rectCover(int number ) 
+{
+    if(number <= 2)
+        return number;
+    //状态定义：F(i)表示用 i个2*1 的小矩形无重叠地覆盖一个 2*i的方法数
+    //初始化:F(i-1) F(i-2)
+    int f1 = 1;
+    int f2 = 2;
+
+    int f3 = 0;
+    for(int i = 2;i < number;i++)
+    {
+        //状态转移方程：F(i) = F(i-1)+F(i-2)
+        f3 = f1 + f2;
+        //状态更新
+        f1 = f2;
+        f2 = f3;
+    }
+    //返回值，F(i)
+    return f3;
+    // write code here
+}
