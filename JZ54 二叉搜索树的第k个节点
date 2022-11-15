@@ -1,0 +1,40 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int ret,count = 0;
+    void dfs(TreeNode* root,int& k)
+    {
+        if(root == nullptr)
+            return;
+        dfs(root->left,k);
+        
+        k--;
+
+        if(k == 0)
+        {
+            ret = root->val;
+            return;
+        }
+        dfs(root->right,k);
+    }
+    int KthNode(TreeNode* root, int k) 
+    {
+        if(root == nullptr || k == 0)
+            return -1;
+        
+        dfs(root,k);
+
+        if(k > 0)
+            return -1;
+        else
+            return ret;
+    }
+};
