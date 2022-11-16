@@ -1,0 +1,33 @@
+class Solution {
+public:
+    bool verify(vector<int>& postorder,int left,int right)
+    {
+        //[1,3,2],[6],[5]
+        //        Index记录分割处的下标
+        if(left >= right) //说明此子树节点数量 ≤1 ，无需判别正确性，因此直接返回true
+            return true;
+        //处理当前值
+        int value = postorder[right];
+        int curIndex = left;
+        while(curIndex < right)
+        {
+            if(postorder[curIndex] > value)
+                break;
+            curIndex++;
+        }
+        int Index = curIndex;//记录下分割点，用于重新划分区间
+        while(curIndex < right)
+        {
+            if(postorder[curIndex] > value)
+                curIndex++;
+            else
+                break;
+        }
+        return curIndex == right 
+        && verify(postorder,left,Index-1) && verify(postorder,Index,right-1);
+    }
+    bool verifyPostorder(vector<int>& postorder) 
+    {
+        return verify(postorder,0,postorder.size()-1);
+    }
+};
