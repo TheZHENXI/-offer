@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int Add(int a, int b) 
+    {
+        while(b != 0)
+        {
+            unsigned int carry = (unsigned int) (a & b) << 1;
+            a = a ^ b;//不带进位的数和
+            b = carry;//进位大小
+        }
+        return a;
+    }
+};
