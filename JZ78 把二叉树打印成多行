@@ -1,0 +1,46 @@
+
+/*
+struct TreeNode {
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+    TreeNode(int x) :
+            val(x), left(NULL), right(NULL) {
+    }
+};
+*/
+class Solution 
+{
+public:
+    vector<vector<int>> Print(TreeNode* root) 
+    {
+        vector<vector<int>> mat;
+        if(root == nullptr)
+            return mat;
+        queue<TreeNode*> q;
+        //将根节点入队
+        q.push(root);
+        //遍历队列
+        while(!q.empty())
+        {
+            //获取当前层的节点数
+            int size = q.size();
+            //同层的放在同一列
+            vector<int> row;
+            while(size--)
+            {
+                //获取当前头元素
+                TreeNode* curNode = q.front();
+                q.pop();
+                row.push_back(curNode->val);
+                //将当前元素的孩子节点入队
+                if(curNode->left != nullptr) 
+                    q.push(curNode->left);
+                if(curNode->right != nullptr) 
+                    q.push(curNode->right);
+            }             
+            mat.push_back(row);
+        }
+        return mat;
+    } 
+};
