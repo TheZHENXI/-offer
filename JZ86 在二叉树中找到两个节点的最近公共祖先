@@ -1,0 +1,35 @@
+/**
+ * struct TreeNode {
+ *	int val;
+ *	struct TreeNode *left;
+ *	struct TreeNode *right;
+ * };
+ */
+
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor_LC(TreeNode* root, int p, int q) 
+    {
+        if(root == nullptr)
+            return nullptr;
+        if(root->val == p || root->val == q)
+            return root;
+
+        TreeNode* left_find  = lowestCommonAncestor_LC(root->left,p,q);
+        TreeNode* right_find = lowestCommonAncestor_LC(root->right,p,q);
+
+        if(left_find != nullptr && right_find != nullptr)
+            return root;
+        else if(left_find != nullptr && right_find == nullptr)
+            return left_find;
+        else
+            return right_find;
+    }
+    int lowestCommonAncestor(TreeNode* root, int o1, int o2) 
+    {
+        TreeNode* ret = lowestCommonAncestor_LC(root,o1,o2);
+        return ret->val;
+    }
+        
+
+};
