@@ -1,0 +1,43 @@
+class Solution {
+public:
+    vector<vector<int>> Print(TreeNode* root) 
+    {
+        vector<vector<int>> mat;
+        if(root == nullptr)
+            return mat;
+        
+        //新建队列
+        queue<struct TreeNode*> q;
+        q.push(root);
+        int step = 0;
+        //出当前节点，带进去孩子节点
+        while(!q.empty())
+        {
+            int size = q.size(); 
+            vector<int> row;
+            while(size--)
+            {
+                //获取头结点
+                struct TreeNode* curNode = q.front();
+                q.pop();
+        
+                //偶数行，尾插
+                if(step%2 == 0)
+                {
+                    row.push_back(curNode->val);
+                }//奇数行头插
+                else
+                    row.insert(row.begin(),curNode->val);
+                //孩子节点进队,写代码时注意 这里不要写错成root的左、右,而是当前的左右
+                if(curNode->left != nullptr)
+                    q.push(curNode->left);
+                if(curNode->right != nullptr)
+                    q.push(curNode->right);
+            }
+            step++;
+            mat.push_back(row);
+        }
+        return mat;
+    }
+    
+};
