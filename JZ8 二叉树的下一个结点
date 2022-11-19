@@ -1,0 +1,34 @@
+class Solution {
+public:
+    void Inorder(TreeLinkNode* root, vector<TreeLinkNode*>& res)
+    {
+        if(root == nullptr)
+            return;
+
+        Inorder(root->left,res);
+        res.push_back(root);
+        Inorder(root->right,res);
+    }
+    TreeLinkNode* GetNext(TreeLinkNode* pNode) 
+    {
+        if(pNode == nullptr)
+            return nullptr;
+        TreeLinkNode* root = pNode;
+        vector<TreeLinkNode*> res;
+        while(root->next != nullptr)
+        {
+            root = root->next;
+        }
+        //中序遍历
+        Inorder(root, res);
+        //查找pnode 的下个节点
+        int index = 0;
+        for(TreeLinkNode* tmp : res)
+        {
+            if(tmp->val == pNode->val)
+                break;
+            index++;
+        }
+        return res[index+1];
+    }
+};
