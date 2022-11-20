@@ -1,0 +1,6 @@
+int Sum_Solution(int n ) 
+{
+    n && (n += Sum_Solution(n-1));//n为0时，逻辑符号后不执行，利用这一短路效应
+
+    return n;
+}
