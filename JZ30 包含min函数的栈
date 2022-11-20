@@ -1,0 +1,31 @@
+class Solution {    
+    stack<int> ST;//正常栈
+    stack<int> min_ST;//辅助栈，栈顶一直为最小值
+public:    
+    /** initialize your data structure here. */
+    
+    void push(int x) 
+    { 
+        ST.push(x);
+        if(min_ST.empty())
+        {
+            min_ST.push(INT_MAX);
+        }
+        min_ST.push(::min(min_ST.top(),x));
+    }
+    
+    void pop() {
+        ST.pop();
+        min_ST.pop();
+    }
+    
+    int top() 
+    {   
+        return ST.top();
+    }
+    
+    int min() 
+    {
+        return min_ST.top();
+    }
+};
