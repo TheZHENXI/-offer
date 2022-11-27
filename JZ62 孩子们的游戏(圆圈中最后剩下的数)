@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int LastRemaining_Solution(int n, int m)
+    {
+        // F(n,m) 表示前n个数字从0位置开始数删除第m个数字之后剩余的数
+        //状态转移方程：F(n,m) = (F(n-1,m) + m) % n
+        int ret = 0;
+        for(int i = 1;i <= n;i++)
+        {
+            ret = (ret + m) % i;
+        }
+        return ret;
+    }
+};
