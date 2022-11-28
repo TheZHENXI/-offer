@@ -1,0 +1,46 @@
+/*
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+			val(x), left(NULL), right(NULL) {
+	}
+};*/
+class Solution {
+public:
+	void DFS(TreeNode* cur,TreeNode* &head,TreeNode* &tail)
+    {
+        if(cur == nullptr)
+            return;
+
+        DFS(cur->left,head,tail);
+
+        if(head == nullptr)
+        {
+            head = cur;
+            tail = cur;
+        }
+        else
+        {
+            cur->left = tail;
+            tail->right = cur;
+            tail = cur;
+        }
+
+        DFS(cur->right,head,tail);
+    }
+
+    TreeNode* Convert(TreeNode* root) 
+	{
+        if(root == nullptr)
+            return nullptr;
+
+        TreeNode* head = nullptr;
+        TreeNode* tail = nullptr;
+        DFS(root,head,tail);
+
+        return head;
+    }
+};
+
