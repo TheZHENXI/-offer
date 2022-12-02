@@ -1,0 +1,12 @@
+class Solution {
+public:
+    char* Serialize(TreeNode *root) 
+    {    
+        string str = to_string((unsigned long)root);
+        return &(str[0]);
+    }
+    TreeNode* Deserialize(char *str) 
+    {
+        return (TreeNode*)stol(str);
+    }
+};
